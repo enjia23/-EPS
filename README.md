@@ -1,5 +1,5 @@
 
-這是一個使用 Python `tkinter` 與 `serial` 撰寫的圖形化介面程式。透過序列埠接收來自 Arduino 的資料，即時監控 6 組電池的電壓，並計算 EPS（Electrical Power System）的總電壓。
+這是一個使用 Python撰寫的圖形化介面程式。透過序列埠接收來自 Arduino 的資料，即時監控 6 組電池的電壓，並計算 EPS（Electrical Power System）的總電壓。
 
 同時顯示 6 組電池的即時電壓狀態。
 電壓上升：數值變為紅色。
