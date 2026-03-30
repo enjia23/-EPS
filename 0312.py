@@ -2,27 +2,24 @@ import tkinter as tk
 from tkinter import ttk
 import serial
 
-# ⚙️ Serial configuration
-SERIAL_PORT = '/dev/ttyUSB0'   # Example: 'COM3' (Windows) or '/dev/ttyUSB0' (Linux)
+SERIAL_PORT = '/dev/ttyUSB0'
 BAUD_RATE = 9600
 
-# Try to connect to Arduino
+
 try:
     ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
     print(f"✅ Connected to serial port: {SERIAL_PORT}")
 except Exception as e:
     ser = None
-    print("⚠️ Serial connection failed:", e)
+    print(" Serial connection failed:", e)
 
-# -------------------------
-# 🖼️ Tkinter GUI setup
-# -------------------------
+
 root = tk.Tk()
 root.title("Arduino Battery Voltage Monitor")
 root.geometry("520x520")
 root.configure(bg="#f0f2f5")
 
-# Style
+
 style = ttk.Style()
 style.theme_use("clam")
 style.configure("TLabel", font=("Arial", 12), background="#f0f2f5")
@@ -30,11 +27,8 @@ style.configure("Card.TFrame", background="white", relief="ridge", borderwidth=2
 style.configure("Title.TLabel", font=("Arial", 14, "bold"), background="white", foreground="#333")
 
 voltage_labels = []
-previous_voltages = [None] * 6  # Store last voltages
+previous_voltages = [None] * 6 
 
-# -------------------------
-# 🔋 Battery cards
-# -------------------------
 for i in range(6):
     frame = ttk.Frame(root, style="Card.TFrame", padding=15)
     frame.grid(row=i//2, column=i%2, padx=20, pady=15, sticky="nsew")
@@ -46,9 +40,7 @@ for i in range(6):
     label.pack()
     voltage_labels.append(label)
 
-# -------------------------
-# ⚡ EPS (total voltage) card
-# -------------------------
+
 eps_frame = ttk.Frame(root, style="Card.TFrame", padding=15)
 eps_frame.grid(row=3, column=0, columnspan=2, padx=20, pady=15, sticky="nsew")
 
@@ -58,9 +50,7 @@ eps_title.pack(pady=5)
 eps_voltage_label = ttk.Label(eps_frame, text="Total Voltage: --- V", font=("Arial", 12))
 eps_voltage_label.pack()
 
-# -------------------------
-# 🔄 Read Arduino data
-# -------------------------
+
 def read_from_arduino():
     if not ser:
         root.after(1000, read_from_arduino)
@@ -93,10 +83,10 @@ def read_from_arduino():
 
                         # Per-cell voltage range check
                         if voltage < 3.0:
-                            text += " ⚠️ Low"
+                            text += "  Low"
                             color = "#b22222"
                         elif voltage > 4.25:
-                            text += " ⚠️ High"
+                            text += "  High"
                             color = "#b22222"
 
                         voltage_labels[i].config(text=text, foreground=color)
@@ -112,10 +102,10 @@ def read_from_arduino():
 
                         # ⚙️ EPS voltage range check
                         if eps_sum < 24.0:
-                            text += " ⚠️ Undervoltage"
+                            text += "  Undervoltage"
                             color = "#b22222"
                         elif eps_sum > 26.0:
-                            text += " ⚠️ Overvoltage"
+                            text += "  Overvoltage"
                             color = "#b22222"
                         else:
                             color = "black"
