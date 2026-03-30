@@ -9,6 +9,6 @@
 當電壓 > 4.25V 時，顯示 ` High` 警告。
 EPS 總電壓監控:
 自動加總 Battery 4、5、6 的電壓作為 EPS 總電壓。
-總電壓 < 24.0V 顯示 ` Undervoltage` (欠壓)。
-總電壓 > 26.0V 顯示 ` Overvoltage` (過壓)。
+總電壓 < 24.0V 顯示 ` Undervoltage` 。
+總電壓 > 26.0V 顯示 ` Overvoltage` 。
 
